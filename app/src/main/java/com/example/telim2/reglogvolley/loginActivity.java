@@ -12,7 +12,7 @@ public class loginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        name=(TextView)findViewById(R.id.textView2);
+        name=(TextView)findViewById(R.id.textView4);
         mail=(TextView)findViewById(R.id.textView3);
 
         Bundle bundle=getIntent().getExtras();

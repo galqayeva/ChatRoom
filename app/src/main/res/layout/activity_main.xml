@@ -66,4 +66,16 @@
 
         android:text="SignIn" />
 
+    <EditText
+        android:id="@+id/editText7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/editText5"
+        android:layout_alignRight="@+id/editText5"
+        android:layout_below="@+id/editText5"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="reenter your password"
+        android:inputType="textPassword" />
+
 </RelativeLayout>

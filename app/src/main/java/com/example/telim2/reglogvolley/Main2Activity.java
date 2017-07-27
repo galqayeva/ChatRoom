@@ -2,6 +2,7 @@ package com.example.telim2.reglogvolley;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -30,7 +31,7 @@ public class Main2Activity extends AppCompatActivity {
     TextView signIn;
     EditText Username,Pass;
     Button login;
-    String username,pass;
+    String username,pass,shusername,shpass;
     String url="http://172.16.205.132/android/login.php";
     AlertDialog.Builder builder;
 
@@ -56,6 +57,20 @@ public class Main2Activity extends AppCompatActivity {
         login=(Button)findViewById(R.id.button2);
         Username=(EditText)findViewById(R.id.editText3);
         Pass=(EditText)findViewById(R.id.editText6);
+
+
+
+        SharedPreferences sharedPreferences=Main2Activity.this.getSharedPreferences(getString(R.string.file),MODE_PRIVATE);
+        shusername=sharedPreferences.getString(getString(R.string.username),"");
+        shpass=sharedPreferences.getString(getString(R.string.pass),"");
+        if (!(shusername.equals("")||shpass.equals(""))){
+            Intent intent=new Intent(Main2Activity.this,loginActivity.class);
+            Bundle bundle=new Bundle();
+            bundle.putString("username",shusername);
+            bundle.putString("mail",shpass);
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
 
 
         login.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +105,7 @@ public class Main2Activity extends AppCompatActivity {
 
                                         else
                                         {
-
+                                            saveSettings();
                                             Intent intent=new Intent(Main2Activity.this,loginActivity.class);
                                            Bundle bundle=new Bundle();
                                            bundle.putString("username",jsonobject.getString("username"));
@@ -145,5 +160,16 @@ public class Main2Activity extends AppCompatActivity {
         });
         AlertDialog alerdialog=builder.create();
         alerdialog.show();
+    }
+
+    public void saveSettings(){
+
+        SharedPreferences sharedPreferences=Main2Activity.this.getSharedPreferences(getString(R.string.file),MODE_PRIVATE);
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.putString(getString(R.string.username),username);
+        editor.putString(getString(R.string.pass),pass);
+        editor.commit();
+
+
     }
 }

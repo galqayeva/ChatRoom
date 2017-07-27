@@ -11,7 +11,7 @@ import android.widget.TextView;
 public class loginActivity extends AppCompatActivity {
 
     TextView name,mail;
-    Button logout;
+    Button logout,findfriends;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +20,8 @@ public class loginActivity extends AppCompatActivity {
         name=(TextView)findViewById(R.id.textView4);
         mail=(TextView)findViewById(R.id.textView3);
         logout=(Button)findViewById(R.id.button3);
+        findfriends=(Button)findViewById(R.id.button4);
+
 
         Bundle bundle=getIntent().getExtras();
         name.setText("Xosgelmisiniz "+bundle.getString("username"));
@@ -34,6 +36,18 @@ public class loginActivity extends AppCompatActivity {
                 editor.clear();
                 editor.commit();
                 Intent intent=new Intent(loginActivity.this,Main2Activity.class);
+                startActivity(intent);
+            }
+        });
+
+        findfriends.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent=new Intent(loginActivity.this,Friends.class);
+                Bundle bundle=new Bundle();
+                bundle.putString("username",bundle.getString("username"));
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
         });

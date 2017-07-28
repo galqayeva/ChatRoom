@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -22,8 +23,9 @@ import java.util.Map;
 public class Friends extends AppCompatActivity {
 
     String username;
+    TextView textView;
 
-    String url="http://172.16.205.132/android/login.php";
+    String url="http://172.16.205.132/android/friendlist.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,21 +35,30 @@ public class Friends extends AppCompatActivity {
         Bundle bundle=getIntent().getExtras();
         username=bundle.getString("username");
 
+        textView=(TextView)findViewById(R.id.textView2);
 
-//        String[] friends={"ada","gun","admin"};
-//
-//        ListAdapter adapter=new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,friends);
-//        ListView friendList=(ListView)findViewById(R.id.find_friends);
-//        friendList.setAdapter(adapter);
+        //textView.setText(username);
+
 
         StringRequest stringRequest=new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
 
+
                         try {
-                            JSONArray jsonArray = new JSONArray(response);
-                            JSONObject jsonobject=jsonArray.getJSONObject(0);
+                            JSONArray jsonArray=new JSONArray(response);
+                            JSONObject jsonObject;
+                            String k="";
+
+                            for(int i=0;i<jsonArray.length();i++){
+                                jsonObject=jsonArray.getJSONObject(i);
+                                k=k+jsonObject.getString("friend");
+                            }
+
+                            textView.setText(k);
+
+
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -60,15 +71,17 @@ public class Friends extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
+
                     }
                 }
 
         ){
 
             @Override
-            protected Map<String> getParams() throws AuthFailureError {
-                Map<String> params=new HashMap<String>();
-                params.put("username",username);
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params=new HashMap<String, String>();
+                params.put("username","ada");
+
                 return params;
             }
         };

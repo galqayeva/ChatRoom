@@ -12,6 +12,7 @@ public class loginActivity extends AppCompatActivity {
 
     TextView name,mail;
     Button logout,findfriends;
+    String kk;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +25,8 @@ public class loginActivity extends AppCompatActivity {
 
 
         Bundle bundle=getIntent().getExtras();
-        name.setText("Xosgelmisiniz "+bundle.getString("username"));
+        kk=bundle.getString("username");
+        name.setText("Xosgelmisiniz "+kk);
         mail.setText("your mail is "+bundle.getString("mail"));
 
 
@@ -46,7 +48,7 @@ public class loginActivity extends AppCompatActivity {
 
                 Intent intent=new Intent(loginActivity.this,Friends.class);
                 Bundle bundle=new Bundle();
-                bundle.putString("username",bundle.getString("username"));
+                bundle.putString("username",kk);
                 intent.putExtras(bundle);
                 startActivity(intent);
             }

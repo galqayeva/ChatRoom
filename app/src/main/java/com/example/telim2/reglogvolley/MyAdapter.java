@@ -7,7 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -38,6 +41,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         friendModel friendModel=friendModels.get(position);
         holder.buttonAdd.setText(friendModel.getId());
         holder.textViewFriend.setText(friendModel.getFriend());
+        Picasso.with(context).load(friendModel.getImageLink()).into(holder.imageView);
 
     }
 
@@ -49,6 +53,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder{
         public TextView textViewFriend;
         public Button buttonAdd;
+        public ImageView imageView;
 
 
         public ViewHolder(View itemView) {
@@ -56,6 +61,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
             textViewFriend=(TextView)itemView.findViewById(R.id.friendName);
             buttonAdd=(Button)itemView.findViewById(R.id.addButton);
+            imageView=(ImageView)itemView.findViewById(R.id.image);
         }
     }
 }

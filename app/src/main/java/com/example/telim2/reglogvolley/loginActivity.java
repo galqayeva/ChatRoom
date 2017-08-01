@@ -46,7 +46,7 @@ public class loginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent=new Intent(loginActivity.this,Friends.class);
+                Intent intent=new Intent(loginActivity.this,FindFriends.class);
                 Bundle bundle=new Bundle();
                 bundle.putString("username",kk);
                 intent.putExtras(bundle);

@@ -29,8 +29,9 @@ dependencies {
     compile 'com.mcxiaoke.volley:library:1.0.19'
     compile 'com.android.support:recyclerview-v7:25.3.1'
     compile 'com.android.support:cardview-v7:25.3.1'
-    testCompile 'junit:junit:4.12'
     compile 'com.squareup.picasso:picasso:2.3.2'
+    compile 'com.google.firebase:firebase-database:10.0.1'
+    testCompile 'junit:junit:4.12'
 }
 
 configurations.all {
@@ -43,3 +44,4 @@ configurations.all {
         }
     }
 }
+apply plugin: 'com.google.gms.google-services'

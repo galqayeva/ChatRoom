@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "230778967490",
+    "firebase_url": "https://reglogvolley.firebaseio.com",
+    "project_id": "reglogvolley",
+    "storage_bucket": "reglogvolley.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:230778967490:android:f3e55535e8de0b96",
+        "android_client_info": {
+          "package_name": "com.example.telim2.reglogvolley"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "230778967490-1vifuoolgk89hre7v1dg771s500rfj72.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.telim2.reglogvolley",
+            "certificate_hash": "1a6cb8d9732e82ca6e8bad45a56409309da8c5d6"
+          }
+        },
+        {
+          "client_id": "230778967490-d9tksopvtdn6lr4jnp6opvpun99214h7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfBOt1EFDG5CT1-memv9Zs38Axqg6bUZk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "230778967490-d9tksopvtdn6lr4jnp6opvpun99214h7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

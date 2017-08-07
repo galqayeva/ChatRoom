@@ -62,12 +62,10 @@ public class Main2Activity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences=Main2Activity.this.getSharedPreferences(getString(R.string.file),MODE_PRIVATE);
         shusername=sharedPreferences.getString(getString(R.string.username),"");
-        shpass=sharedPreferences.getString(getString(R.string.pass),"");
-        if (!(shusername.equals("")||shpass.equals(""))){
+        if (!(shusername.equals(""))){
             Intent intent=new Intent(Main2Activity.this,loginActivity.class);
             Bundle bundle=new Bundle();
             bundle.putString("username",shusername);
-            bundle.putString("mail",shpass);
             intent.putExtras(bundle);
             startActivity(intent);
         }
@@ -167,7 +165,6 @@ public class Main2Activity extends AppCompatActivity {
         SharedPreferences sharedPreferences=Main2Activity.this.getSharedPreferences(getString(R.string.file),MODE_PRIVATE);
         SharedPreferences.Editor editor=sharedPreferences.edit();
         editor.putString(getString(R.string.username),username);
-        editor.putString(getString(R.string.pass),pass);
         editor.commit();
 
 

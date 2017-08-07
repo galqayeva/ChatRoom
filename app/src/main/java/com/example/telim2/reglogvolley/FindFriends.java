@@ -5,6 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -37,7 +40,6 @@ public class FindFriends extends AppCompatActivity {
 
         friendModels=new ArrayList<>();
 
-
         Bundle bundle=getIntent().getExtras();
         username=bundle.getString("username");
         url="http://172.16.205.132/android/friendlist.php?username=ada";
@@ -62,7 +64,9 @@ public class FindFriends extends AppCompatActivity {
                             for (int i=0;i<jsonArray.length();i++){
                                 JSONObject o=jsonArray.getJSONObject(i);
                                 friendModel item=new friendModel(
-                                        "add",o.getString("friend"),"https://cdn.pixabay.com/photo/2013/07/13/11/34/apple-158419_960_720.png"
+                                        "add",o.getString("friend"),
+                                        "https://cdn.pixabay.com/photo/2013/07/13/11/34/apple-158419_960_720.png",
+                                        o.getString("username")
                                 );
                                 friendModels.add(item);
 
@@ -86,11 +90,6 @@ public class FindFriends extends AppCompatActivity {
                 });
         RequestQueue requestQueue= Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
-
-
-
-
-
 
 
     }

@@ -28,7 +28,7 @@ import java.util.Set;
 public class loginActivity extends AppCompatActivity {
 
     TextView naame,mail;
-    Button logout,findfriends;
+    Button logout,findfriends,notification;
     String kk;
     private Button  add_room;
     private EditText room_name;
@@ -47,6 +47,16 @@ public class loginActivity extends AppCompatActivity {
         naame=(TextView)findViewById(R.id.textView4);
         logout=(Button)findViewById(R.id.button3);
         findfriends=(Button)findViewById(R.id.button4);
+        notification=(Button)findViewById(R.id.button5);
+
+        notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(loginActivity.this,Notification.class);
+                startActivity(intent);
+
+            }
+        });
 
 
 
@@ -72,6 +82,7 @@ public class loginActivity extends AppCompatActivity {
                 Map<String,Object> map = new HashMap<String, Object>();
                 map.put(room_name.getText().toString(),"");
                 root.updateChildren(map);
+                room_name.setText("");
 
             }
         });

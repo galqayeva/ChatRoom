@@ -22,31 +22,9 @@ import java.util.Map;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
-/**
- * Created by filipp on 6/28/2016.
- */
 public class Chat_Room  extends AppCompatActivity {
 
     private Button btn_send_msg;
@@ -54,7 +32,7 @@ public class Chat_Room  extends AppCompatActivity {
     private TextView chat_conversation;
 
     private String user_name,room_name;
-    private DatabaseReference root ;
+    private DatabaseReference root ,notiRoot;
     private String temp_key;
 
     @Override
@@ -72,6 +50,7 @@ public class Chat_Room  extends AppCompatActivity {
 
         root = FirebaseDatabase.getInstance().getReference().child(room_name);
 
+
         btn_send_msg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -86,14 +65,15 @@ public class Chat_Room  extends AppCompatActivity {
                 map2.put("msg",input_msg.getText().toString());
 
                 message_root.updateChildren(map2);
+                input_msg.setText("");
 
             }
         });
 
-//        final Intent notificationIntent = new Intent(this, MainActivity.class);
-//        final PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent,
-//                PendingIntent.FLAG_UPDATE_CURRENT);
-//        final NotificationCompat.Builder builder=new NotificationCompat.Builder(this);
+        final Intent notificationIntent = new Intent(this, MainActivity.class);
+        final PendingIntent contentIntent = PendingIntent.getActivity(this, 0, notificationIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        final NotificationCompat.Builder builder=new NotificationCompat.Builder(this);
 
 
 
@@ -104,14 +84,14 @@ public class Chat_Room  extends AppCompatActivity {
 
                 append_chat_conversation(dataSnapshot);
 
-//                builder.setSmallIcon(R.mipmap.ic_launcher);
-//                builder.setContentTitle("Notifikasiya");
-//                builder.setContentText("This is a test notification");
-//                builder.setContentIntent(contentIntent);
-//                builder.setPriority(Notification.PRIORITY_HIGH);
-//                builder.setAutoCancel(true);
-//                NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-//                notificationManager.notify(0, builder.build());
+                builder.setSmallIcon(R.mipmap.ic_launcher);
+                builder.setContentTitle("new");
+                builder.setContentText("message");
+                builder.setContentIntent(contentIntent);
+                builder.setPriority(Notification.PRIORITY_HIGH);
+                builder.setAutoCancel(true);
+                NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                notificationManager.notify(0, builder.build());
 
             }
 
@@ -157,9 +137,7 @@ public class Chat_Room  extends AppCompatActivity {
         }
 
 
-    }
-
-    private void addNotification() {
 
     }
+
 }

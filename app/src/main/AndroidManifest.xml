@@ -21,7 +21,8 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".loginActivity" />
         <activity android:name=".FindFriends" />
-        <activity android:name=".Chat_Room"></activity>
+        <activity android:name=".Chat_Room" />
+        <activity android:name=".Notification"></activity>
     </application>
 
 </manifest>

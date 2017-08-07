@@ -9,12 +9,22 @@ public class friendModel {
     private String friend;
     private String  id;
     private String imageLink;
+    private  String Gname;
 
-    public friendModel(String id, String friend, String imageLink) {
+    public String getGname() {
+        return Gname;
+    }
+
+    public void setGname(String gname) {
+        Gname = gname;
+    }
+
+    public friendModel(String id, String friend, String imageLink, String Gname) {
 
         this.id = id;
         this.friend = friend;
         this.imageLink = imageLink;
+        this.Gname=Gname;
     }
 
     public String getImageLink() {

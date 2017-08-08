@@ -11,6 +11,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
@@ -29,11 +34,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
     private List<friendModel> friendModels;
     private Context context;
-    String temp_key;
     private DatabaseReference root ;
-
-
-
+    String url="http://172.16.205.132/android/friendrequest.php";
 
     public MyAdapter(List<friendModel> friendModelList, Context context) {
         this.friendModels = friendModelList;
@@ -47,7 +49,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         final friendModel friendModel=friendModels.get(position);
         holder.buttonAdd.setText(friendModel.getId());
         holder.textViewFriend.setText(friendModel.getFriend());
@@ -55,22 +57,42 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
         root=FirebaseDatabase.getInstance().getReference().child("friends").child("KqvHGZ5k4cnq6dm64K1");
 
-        final String friendName=friendModel.getFriend();
-        final String Gname=friendModel.getGname();
 
         holder.buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-//                DatabaseReference rootList=root.child(friendModel.getGname()).child("friendList").push();
-//                Map<String,Object> map=new HashMap<String, Object>();
-//                map.put("name",friendModel.getFriend());
-//                rootList.updateChildren(map);
+                StringRequest stringRequest=new StringRequest(Request.Method.POST, url,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                holder.buttonAdd.setEnabled(false);
+                                holder.buttonAdd.setText("friendship sent");
 
-                DatabaseReference rootRequest=root.child("Gunay").child("friendRequest").push();
-                Map<String,Object> map2=new HashMap<String, Object>();
-                map2.put("name",friendModel.getFriend());
-                rootRequest.updateChildren(map2);
+
+
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Toast.makeText(context,"error",Toast.LENGTH_LONG).show();
+
+                            }
+                        }){
+
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String,String> params=new HashMap<String, String>();
+                        params.put("user",friendModel.getGname());
+                        params.put("friend",friendModel.getFriend());
+                        return params;
+                    }
+                };
+
+                MySingleTon.getInstance(context).addToRequestQueue(stringRequest);
+
+
+
             }
         });
 

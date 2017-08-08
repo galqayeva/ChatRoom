@@ -49,10 +49,17 @@ public class loginActivity extends AppCompatActivity {
         findfriends=(Button)findViewById(R.id.button4);
         notification=(Button)findViewById(R.id.button5);
 
+        Bundle bundle=getIntent().getExtras();
+        kk=bundle.getString("username");
+        naame.setText("Profile "+kk);
+
         notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(loginActivity.this,Notification.class);
+                Bundle bundle=new Bundle();
+                bundle.putString("username",kk);
+                intent.putExtras(bundle);
                 startActivity(intent);
 
             }
@@ -60,9 +67,6 @@ public class loginActivity extends AppCompatActivity {
 
 
 
-        Bundle bundle=getIntent().getExtras();
-        kk=bundle.getString("username");
-        naame.setText("Xosgelmisiniz "+kk);
 
 
         add_room = (Button) findViewById(R.id.btn_add_room);

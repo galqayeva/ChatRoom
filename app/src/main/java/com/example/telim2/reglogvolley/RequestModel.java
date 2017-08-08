@@ -1,17 +1,16 @@
 package com.example.telim2.reglogvolley;
 
 /**
- * Created by telim2 on 31.07.2017.
+ * Created by telim2 on 08.08.2017.
  */
 
-public class friendModel {
-
+public class RequestModel {
     private String friend;
     private String  id;
     private String imageLink;
     private  String Gname;
 
-    public friendModel(String id, String friend, String imageLink, String Gname) {
+    public RequestModel(String id, String friend, String imageLink, String Gname) {
 
         this.id = id;
         this.friend = friend;

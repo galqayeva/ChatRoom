@@ -42,7 +42,7 @@ public class FindFriends extends AppCompatActivity {
 
         Bundle bundle=getIntent().getExtras();
         username=bundle.getString("username");
-        url="http://172.16.205.132/android/friendlist.php?username=ada";
+        url="http://172.16.205.132/android/friendlist.php?username="+username;
         loadRecycleData();
     }
 

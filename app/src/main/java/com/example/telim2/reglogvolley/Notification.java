@@ -1,93 +1,99 @@
 package com.example.telim2.reglogvolley;
 
+import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 public class Notification extends AppCompatActivity {
 
-    String username,friend;
+    String username,url;
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
-    private List<friendModel> friendModels;
-    DatabaseReference root;
+    private List<RequestModel> requestModelList;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
-        recyclerView=(RecyclerView)findViewById(R.id.recycleview);
+
+        recyclerView=(RecyclerView)findViewById(R.id.recycleview2);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        friendModels=new ArrayList<>();
+        requestModelList=new ArrayList<>();
 
         Bundle bundle=getIntent().getExtras();
         username=bundle.getString("username");
+        url="http://172.16.205.132/android/allrequests.php?username="+username;
         loadRecycleData();
-
     }
+
     private void loadRecycleData(){
-        root = FirebaseDatabase.getInstance().getReference().child("KqvHGZ5k4cnq6dm64K1");
+        final ProgressDialog progressDialog=new ProgressDialog(this);
+        progressDialog.setMessage("loaadinggg...");
+        progressDialog.show();
 
-        root.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Iterator i = dataSnapshot.getChildren().iterator();
+        StringRequest stringRequest=new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        progressDialog.dismiss();
+
+                        try {
+                            JSONObject jsonObject=new JSONObject(response);
+                            JSONArray jsonArray=jsonObject.getJSONArray("gresponse");
+
+                            for (int i=0;i<jsonArray.length();i++){
+                                JSONObject o=jsonArray.getJSONObject(i);
+                                RequestModel item=new RequestModel(
+                                        "add",o.getString("friend"),
+                                        "https://cdn.pixabay.com/photo/2013/07/13/11/34/apple-158419_960_720.png",
+                                        o.getString("username")
+                                );
+                                requestModelList.add(item);
 
 
-                while (i.hasNext()){
-                    friend=(String)((DataSnapshot)i.next()).getValue();
+                            }
 
-                    friendModel item=new friendModel(
-                            "add",friend,
-                            "https://cdn.pixabay.com/photo/2013/07/13/11/34/apple-158419_960_720.png",
-                            username
-                    );
+                            adapter=new MyAdapter2(requestModelList,getApplicationContext());
+                            recyclerView.setAdapter(adapter);
 
-                }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
-                adapter=new MyFireAdapter(friendModels,getApplicationContext());
-                recyclerView.setAdapter(adapter);
-            }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
 
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                    }
+                });
+        RequestQueue requestQueue= Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
 
-            }
 
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
 
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        })
 
 
     }
